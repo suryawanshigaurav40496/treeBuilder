@@ -19,17 +19,17 @@ $(document).ready(function() {
     'raintree-leaf': { top: 525, left: 1650 },
     'gulmohar-leaf': { top: 660, left: 1650 },
 
-    'mango-fruit': { top: 900, left: 100 },
-    'almond-fruit': { top: 900, left: 260 },
-    'tamarind-fruit': { top: 900, left: 410 },
-    'raintree-fruit': { top: 900, left: 550 },
-    'gulmohar-fruit': { top: 900, left: 700 },
+    'mango-fruit': { top: 800, left: 100 },
+    'almond-fruit': { top: 800, left: 260 },
+    'tamarind-fruit': { top: 800, left: 410 },
+    'raintree-fruit': { top: 800, left: 550 },
+    'gulmohar-fruit': { top: 800, left: 700 },
 
-    'mango-flower': { top: 900, left: 1050 },
-    'almond-flower': { top: 900, left: 1180 },
-    'tamarind-flower': { top: 900, left: 1350 },
-    'raintree-flower': { top: 900, left: 1480 },
-    'gulmohar-flower': { top: 900, left: 1620 }
+    'mango-flower': { top: 800, left: 1050 },
+    'almond-flower': { top: 800, left: 1180 },
+    'tamarind-flower': { top: 800, left: 1350 },
+    'raintree-flower': { top: 800, left: 1480 },
+    'gulmohar-flower': { top: 800, left: 1620 }
   };
 
   // Initialize positions for all parts
