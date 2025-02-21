@@ -1,124 +1,232 @@
 $(document).ready(function() {
-  let correctPartsCount = 0; // Initialize a counter for correct parts
-  let raintreePartsDropped = 0; // Counter for raintree parts dropped
-  let score = 0; // Initialize score
-  let wrongAttempts = 0; // Initialize counter for wrong attempts
+  let correctPartsCount = 0;
+  let raintreePartsDropped = 0;
+  let score = 0;
+  let wrongAttempts = 0;
+  localStorage.removeItem('totalScore');
+
+  // Store the initial position of each part
+  const initialPositions = {
+    'mango-bark': { top: 120, left: 100 },
+    'almond-bark': { top: 255, left: 100 },
+    'tamarind-bark': { top: 390, left: 100 },
+    'raintree-bark': { top: 525, left: 100 },
+    'gulmohar-bark': { top: 660, left: 100},
+
+    'mango-leaf': { top: 120, left: 1650 },
+    'almond-leaf': { top: 255, left: 1650 },
+    'tamarind-leaf': { top: 390, left: 1650 },
+    'raintree-leaf': { top: 525, left: 1650 },
+    'gulmohar-leaf': { top: 660, left: 1650 },
+
+    'mango-fruit': { top: 900, left: 100 },
+    'almond-fruit': { top: 900, left: 260 },
+    'tamarind-fruit': { top: 900, left: 410 },
+    'raintree-fruit': { top: 900, left: 550 },
+    'gulmohar-fruit': { top: 900, left: 700 },
+
+    'mango-flower': { top: 900, left: 1050 },
+    'almond-flower': { top: 900, left: 1180 },
+    'tamarind-flower': { top: 900, left: 1350 },
+    'raintree-flower': { top: 900, left: 1480 },
+    'gulmohar-flower': { top: 900, left: 1620 }
+  };
+
+  // Initialize positions for all parts
+  $('.part').each(function() {
+    let partId = $(this).attr('id');
+    let initialPosition = initialPositions[partId];
+    $(this).data('initialPosition', initialPosition);
+    
+    // Set position using top and left only
+    $(this).css({
+      position: 'absolute',
+      top: initialPosition.top + 'px',
+      left: initialPosition.left + 'px'
+    });
+  });
 
   // Update the score display
   function updateScoreDisplay() {
-    $('.score').text('Score: ' + score); // Update the score display
+    $('.score').text('Score: ' + score);
   }
 
-  // Make parts draggable
+  // Make all parts draggable
   $('.part').draggable({
-    revert: 'invalid', // Revert if not dropped in a valid droppable
-    helper: 'clone', // Use a clone of the element as the helper
+    revert: 'invalid',
+    helper: 'clone',
+    containment: 'window', // Keep elements within window bounds
     start: function(event, ui) {
-      $(this).css('opacity', '0.5'); // Make the original part semi-transparent
-      $(this).css('z-index', 10); // Bring the dragged part to front
+      $(this).css('opacity', '0.5');
+      $(this).css('z-index', 10);
     },
     stop: function(event, ui) {
-      $(this).css('opacity', '1'); // Reset opacity
-      $(this).css('z-index', ''); // Reset z-index after dragging
+      $(this).css('opacity', '1');
+      $(this).css('z-index', '');
     }
   });
 
   // Make the tree silhouette droppable
   $('#raintree-tree-mainimg').droppable({
-    accept: '.part', // Accept only parts
+    accept: '.part',
     drop: function(event, ui) {
-      const draggedPartId = ui.draggable.attr('id'); // Get the dragged part's ID
-      const correctSound = document.getElementById('correctSound');
-  const wrongSound = document.getElementById('wrongSound');
-      console.log('Dragged Part ID:', draggedPartId);
-
-      // Prevent the raintree-tree-mainimg from shifting position
-      $(this).css('position', 'absolute'); // Change to absolute positioning
-
-      // Check if the dragged part matches the expected ID
-      if (['raintree-bark', 'raintree-leaf', 'raintree-fruit', 'raintree-flower'].includes(draggedPartId)) {
-        // Play correct sound
-    correctSound.play();
-        showMessage(`Correct ${draggedPartId.split('-')[1].charAt(0).toUpperCase() + draggedPartId.split('-')[1].slice(1)} selected`);
-
-        // Update score for correct part
-        score += 10; 
-        updateScoreDisplay(); // Update the score display
-
-        // Instead of appending, just hide the part
-        ui.draggable.hide(); // Hide the part after dropping
-
-        raintreePartsDropped++; // Increment the raintree parts dropped
-
-        // Reveal corresponding silhouette based on the dropped part
-        if (draggedPartId === 'raintree-bark') {
-          $('#raintreemain-barkimg').fadeIn(); // Reveal raintree bark image
-        } else if (draggedPartId === 'raintree-leaf') {
-          $('#raintreemain-leaveimg').fadeIn(); // Reveal raintree leaf image
-        } else if (draggedPartId === 'raintree-fruit') {
-          $('#raintreemain-fruitimg').fadeIn(); // Reveal raintree fruit image
-        } else if (draggedPartId === 'raintree-flower') {
-          $('#raintreemain-flowerimg').fadeIn(); // Reveal raintree flower image
-        }
-
-        // Check if four correct parts have been dropped
-        if (raintreePartsDropped === 4) {
-          revealMainImage(); // Call the function to reveal the main image
-        }
-      } else {
-        // Play wrong sound
-    wrongSound.play();
-        showMessage('Please select another Part'); // For all other parts
-        
-        // Update score for incorrect part
-        score -= 2; 
-        updateScoreDisplay(); // Update the score display
-
-        // Increment wrong attempts
-        wrongAttempts++; 
-
-        // Check if wrong attempts have reached 5
-        if (wrongAttempts >= 5) {
-          $('#game-over-modal').fadeIn(); // Show Game Over modal
-        } else {
-          ui.draggable.draggable('option', 'revert', true); // Revert the part back to its original position
-        }
-      }
+      handleDrop(ui.draggable);
     }
   });
-//.................
-$(document).on('click', '#identify-next-tree', function() {
-  const totalScore = (parseInt(localStorage.getItem('totalScore')) || 0) + score;
-  localStorage.setItem('totalScore', totalScore);
-  
-  $('#rain-tree-info-modal').fadeOut();
-  $('#result-modal').fadeIn();
-  $('#total-score').text(totalScore);
+
+  // Handle drop logic
+  function handleDrop(draggedPart) {
+    const draggedPartId = draggedPart.attr('id');
+    const correctSound = document.getElementById('correctSound');
+    const wrongSound = document.getElementById('wrongSound');
+
+    if (['raintree-bark', 'raintree-leaf', 'raintree-fruit', 'raintree-flower'].includes(draggedPartId)) {
+      correctSound.play();
+      raintreePartsDropped++;
+
+      // Scoring logic based on the number of correct parts dropped
+      if (raintreePartsDropped === 1) {
+        score += 10; // First correct part
+      } else if (raintreePartsDropped === 2) {
+        score += 10; // Second correct part
+      } else if (raintreePartsDropped === 3) {
+        score += 10; // Third correct part
+      } else if (raintreePartsDropped === 4) {
+        score += 10; // Fourth correct part
+      }
+
+      updateScoreDisplay();
+
+      // Show the corresponding main image part
+      if (draggedPartId === 'raintree-bark') {
+        $('#raintreemain-barkimg').fadeIn();
+      } else if (draggedPartId === 'raintree-leaf') {
+        $('#raintreemain-leaveimg').fadeIn();
+      } else if (draggedPartId === 'raintree-fruit') {
+        $('#raintreemain-fruitimg').fadeIn();
+      } else if (draggedPartId === 'raintree-flower') {
+        $('#raintreemain-flowerimg').fadeIn();
+      }
+
+      // Move the dragged part to the tree instead of hiding it
+      draggedPart.css({
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        opacity: '0'
+      });
+
+      if (raintreePartsDropped === 4) {
+        revealMainImage();
+      }
+    } else {
+      wrongSound.play();
+      showMessage('Please select another Part');
+      score -= 2; // Deduct points for wrong attempts
+      updateScoreDisplay();
+      wrongAttempts++;
+
+      if (wrongAttempts >= 5) {
+        $('#game-over-modal').fadeIn();
+      } else {
+        let initialPosition = draggedPart.data('initialPosition');
+        draggedPart.css({
+          position: 'absolute',
+          top: initialPosition.top + 'px',
+          left: initialPosition.left + 'px',
+        });
+      }
+    }
+  }
+
+  // Handle touch events for draggable parts
+  $('.part').on('touchstart', function(event) {
+    event.stopPropagation(); // Prevent touch events from propagating to other elements
+    const touch = event.originalEvent.touches[0];
+    const draggedPart = $(this);
+    const offset = draggedPart.offset();
+    const touchX = touch.pageX - offset.left;
+    const touchY = touch.pageY - offset.top;
+
+    draggedPart.css({
+        position: 'absolute',
+        left: touch.pageX - touchX,
+        top: touch.pageY - touchY,
+        opacity: '0.5',
+        zIndex: 10
+    });
+
+    $(document).on('touchmove', function(event) {
+        const touch = event.originalEvent.touches[0];
+        draggedPart.css({
+            left: touch.pageX - touchX,
+            top: touch.pageY - touchY
+        });
+    });
+
+    $(document).on('touchend', function(event) {
+        $(document).off('touchmove');
+        $(document).off('touchend'); // Remove touchend listener to prevent multiple triggers
+
+        const dropPosition = {
+            left: draggedPart.css('left'),
+            top: draggedPart.css('top')
+        };
+
+        // Check if the dragged part is dropped within the droppable area
+        const droppableArea = $('#raintree-tree-mainimg');
+        const droppableOffset = droppableArea.offset();
+        const droppableWidth = droppableArea.outerWidth();
+        const droppableHeight = droppableArea.outerHeight();
+
+        const isDroppedInArea = (
+            parseInt(dropPosition.left) >= droppableOffset.left &&
+            parseInt(dropPosition.left) <= droppableOffset.left + droppableWidth &&
+            parseInt(dropPosition.top) >= droppableOffset.top &&
+            parseInt(dropPosition.top) <= droppableOffset.top + droppableHeight
+        );
+
+        if (isDroppedInArea) {
+            // Check if the part has already been dropped
+            if (!draggedPart.data('dropped')) {
+                handleDrop(draggedPart);
+                draggedPart.data('dropped', false); // Mark as dropped
+            }
+        } else {
+            // Reset to initial position if not dropped in the area
+            let initialPosition = draggedPart.data('initialPosition');
+            draggedPart.css({
+                position: 'absolute',
+                top: initialPosition.top + 'px',
+                left: initialPosition.left + 'px'
+            });
+        }
+    });
+  });
+
+  // Prevent touch events on the rest of the screen
+  $(document).on('touchstart', function(event) {
+    if (!$(event.target).hasClass('part')) {
+      event.preventDefault(); // Prevent default touch behavior if not on a part
+    }
+  });
+
+  $(document).on('click', '#identify-next-tree', function() {
+    const raintreeScore = score; // Get the current score
+    localStorage.setItem('raintreeScore', raintreeScore); // Store it in localStorage
+    // Redirect to the next container
+    window.location.href = 'almondcontainer.html';
 });
 
-// Add Result Modal handlers
-$(document).on('click', '#playAgainBtnResult', function() {
-  localStorage.removeItem('totalScore');
-  window.location.href = 'mangocontainer.html';
-});
-
-$(document).on('click', '#mainMenuBtnResult', function() {
-  localStorage.removeItem('totalScore');
-  window.location.href = '../index.html';
-}); 
-//.................
-  // Restart button logic
   $(document).on('click', '.restartBtn', function() {
-    location.reload(); // Reload the current page
+    location.reload();
   });
 
-  // Quit button logic
   $(document).on('click', '.quitBtn', function() {
-    window.location.href = '../index.html'; // Redirect to the index page
+    window.location.href = '../index.html';
   });
 });
 
-// Function to display a message
 function showMessage(message) {
   const messageElement = $('<div class="message"></div>').text(message);
   $('body').append(messageElement);
@@ -128,73 +236,41 @@ function showMessage(message) {
   }, 2000);
 }
 
-// Function to reveal the main raintree image
 function revealMainImage() {
   const mainImage = $('#raintree-tree-mainimg .main-image');
   const silhouette = $('#raintree-tree-mainimg .silhouette');
 
-  // Use a fade effect to reveal the main image
   silhouette.fadeOut(1000, function() {
-    mainImage.fadeIn(1000); // Fade in the main image
-
-    // Hide or send the new images to the back
+    mainImage.fadeIn(1000);
     $('#raintreemain-barkimg, #raintreemain-leaveimg, #raintreemain-fruitimg, #raintreemain-flowerimg').css('z-index', -1);
-
-    // Show the modal with raintree tree information
-    $('#rain-tree-info-modal').fadeIn();
+    $('#raintree-info-modal').fadeIn();
   });
 }
 
-// Close the modal when the close button is clicked
 $(document).on('click', '.close-button', function() {
-  $('#rain-tree-info-modal').fadeOut();
+  $('#raintree-info-modal').fadeOut();
 });
 
-// Close the modal when clicking outside of the modal content
 $(window).on('click', function(event) {
-  if ($(event.target).is('#rain-tree-info-modal')) {
-    $('#rain-tree-info-modal').fadeOut();
+  if ($(event.target).is('#raintree-info-modal')) {
+    $('#raintree-info-modal').fadeOut();
   }
 });
 
-// Redirect to tamarindcontainer.html when the button is clicked
-// $(document).on('click', '#identify-next-tree', function() {
-//   const totalScore = (parseInt(localStorage.getItem('totalScore')) || 0) + score;
-//   localStorage.setItem('totalScore', totalScore);
-  
-//   $('#rain-tree-info-modal').fadeOut();
-//   $('#result-modal').fadeIn();
-//   $('#total-score').text(totalScore);
-// });
-
-// // Add Result Modal handlers
-// $(document).on('click', '#playAgainBtnResult', function() {
-//   localStorage.removeItem('totalScore');
-//   window.location.href = 'mangocontainer.html';
-// });
-
-// $(document).on('click', '#mainMenuBtnResult', function() {
-//   localStorage.removeItem('totalScore');
-//   window.location.href = '../index.html';
-// }); 
-
-// Close the Game Over modal when the close button is clicked
 $(document).on('click', '#closeGameOverModal', function() {
+  $('#game-over-modal').fadeOut();
 });
 
-// Play Again button logic
 $(document).on('click', '#playAgainBtn', function() {
   localStorage.removeItem('totalScore');
-  location.reload(); // current page reload -score == 0
+  location.reload();
   $('#game-over-modal').fadeOut();
-  score = 0; // Reset score
-  updateScoreDisplay(); // Update the score display
-  raintreePartsDropped = 0; // Reset dropped parts count
-  // Optionally, reset the game state here (e.g., show all parts again)
+  score = 0;
+  updateScoreDisplay();
+  raintreePartsDropped = 0;
 });
 
-// Main Menu button logic
 $(document).on('click', '#mainMenuBtn', function() {
   localStorage.removeItem('totalScore');
-  window.location.href = '../index.html'; // Redirect to the main menu
-}); 
+  window.location.href = '../index.html';
+});

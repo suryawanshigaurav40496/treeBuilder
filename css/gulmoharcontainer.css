@@ -5,74 +5,89 @@
     box-sizing: border-box;
 }
 
-/* Body and Game Container */
+html {
+    height: 100%;
+    width: 100%;
+}
+
 body {
    font-family: 'Patrick Hand', cursive;
-   /* font-family: Arial, sans-serif; */
-    /* background-color: #82b0e6; */
-    background-image: url(/assets/bg.png);
-    /* Background size cover is going to cover only screen size */
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: auto;
-    margin: 0;
-   
-    
+   background-image: url(/assets/bg.png);
+   background-size: cover;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100%;
+   width: 100%;
 }
 
 audio {
     display: none;
-  }
+}
 
 .game-container {
     height: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     width: 100%;
-    max-width: 1200px;
+    display: flex;
+    flex-direction: center;
     align-items: center;
-   
 }
 
-
-/* Left Sidebar (Barks) */
 .sidebar {
     width: 200px;
     padding: 10px;
-    
     background-color: #45cf4a;
     border-radius: 8px;
     margin: 10px;
-    height: auto;
+    height: auto;   
     overflow-y: auto;
     position: relative; 
     z-index: 1000;
 }
- /*
-*.sidebar img {
-    width: 70px;
-    height: 70px;
-    object-fit: contain;
-    object-fit: cover;
-    object-position: center;
-} 
-*/
-.sidebar h3 {
-    text-align: center;
-    margin-bottom: 15px;
+
+.bark-title {
+    position: absolute;
+    top: 80px;
+    left: 140px;
+    color: rgb(5, 129, 5);
+    font-size: 2rem;
+    text-align: left;
 }
 
-/* Center Section (Tree Silhouette) */
+.leave-title {
+    position: absolute;
+    top: 80px;
+    right: 140px;
+    color: rgb(5, 129, 5);
+    font-size: 2rem;
+    text-align: right;
+}
+
+.fruit-title {
+    position: absolute;
+    bottom: 200px;
+    left: 450px;
+    color: rgb(5, 129, 5);
+    font-size: 2rem;
+    text-align: left;
+}
+
+.flower-title {
+    position: absolute;
+    bottom: 200px;
+    right: 450px;
+    color: rgb(5, 129, 5);
+    font-size: 2rem;
+    text-align: right;
+}
+
 .center {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 10px 50px;
-    position: relative; /* Enable absolute positioning of children */
+    position: relative;
 }
 
 .tree-heading {
@@ -83,14 +98,16 @@ audio {
     font-weight: bold;
 }
 
-/* Independent Positioning for Tree Elements */
 .cardTreeContainer {
-    position: relative; /* Enable absolute positioning of children */
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
     align-items: center;
-    align-content: center;
-    margin: 80px;
-    width: 500px;
-    height: 500px;
+    width: 35%;
+    height: 60%;
     border-radius: 1rem;
     background-color: #f5f6f9;
     background-image: linear-gradient(
@@ -104,26 +121,15 @@ audio {
       rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px,
       rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
       rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
 }
 
-.tree-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px 0;
-}
 
-/* gulmohar Main Image */
 #gulmohar-tree-mainimg {
-    position: absolute; /* Absolute positioning within the parent container */
-    top: 10%; /* Example of positioning from the top */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Ensure it is truly centered */
-    width: 80%; /* Ensure it's smaller than the card container */
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
     height: auto;
     touch-action: none;
 }
@@ -133,9 +139,8 @@ audio {
     height: auto;
 }
 
-/* Silhouette */
 .silhouette {
-    position: absolute; /* Absolute positioning within the main image */
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -148,8 +153,6 @@ audio {
     pointer-events: none;
 }
 
-
-/* Message box */
 .message {
     position: fixed;
     bottom: 20px;
@@ -163,8 +166,7 @@ audio {
     z-index: 9999;
 }
 
-/* Footer (Fruits & Flowers) */
-.footer{
+.footer {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -173,66 +175,47 @@ audio {
     bottom: 0;
     left: 0;
     padding: 10px;
-
-}
-
-/* Fruits and Flowers Bars */
-.fruits-bar, .flowers-bar {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    background-color:transparent;
-    border-radius: 8px;
-    padding: 5px;
-}
-
-.fruits-bar h3, .flowers-bar h3 {
-    margin-bottom: 20px;
-    margin-right: 10px; 
-    color: rgb(2, 60, 2);
 }
 
 .part {
     margin: 0 2px;
     text-align: center;
-    position: relative; /* Add this */
+    position: relative;
     z-index: 1000;
-    touch-action: manipulation; /* Enable touch pan/zoom gestures */
-  cursor: grab; /* Show grab cursor for better UX */
+    cursor: grab;
 }
 
 .part:active {
-    cursor: grabbing; /* Show grabbing cursor during drag */
-  }
+    cursor: grabbing;
+}
+
+.ui-draggable-dragging {
+    z-index: 10000 !important;
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+}
+
+.droppable-hover {
+    transform: scale(1.02);
+    transition: transform 0.2s ease;
+}
 
 .part img {
     pointer-events: none;
-    width: 100%;
-    height: 100px; /* Fixed height for consistency */
-    max-width: 120px;
+    width: 130%;
+    height: 130px;
     object-fit: contain;
     cursor: pointer;
     z-index: 1000;
-    background-color: rgba(255, 255, 255, 0.1); /* Slight white background */
-    border-radius: 12px; /* Rounded corners */
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
     padding: 8px;
-    box-shadow: 
-        rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
-        rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
-        rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset,
-        rgba(0, 0, 0, 0.06) 0px 2px 1px,
-        rgba(0, 0, 0, 0.09) 0px 4px 2px,
-        rgba(0, 0, 0, 0.09) 0px 8px 4px;
-    transition: transform 0.2s ease-in-out;
 }
 
 .part img:hover {
-    transform: scale(1.05); /* Slight zoom effect on hover */
+    transform: scale(1.05);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .game-container {
         flex-direction: column;
@@ -257,40 +240,38 @@ audio {
 .main-image {
     display: none;
 }
-/**
-/* Add styles for the new images to match the main gulmohar image and silhouettes */
+
 #gulmoharmain-barkimg,
 #gulmoharmain-leaveimg,
 #gulmoharmain-fruitimg,
 #gulmoharmain-flowerimg {
-    position: absolute; /* Absolute positioning within the main image container */
-    top: 0; /* Align with the top of the main image */
-    left: 0; /* Align with the left of the main image */
-    width: 100%; /* Ensure they take the full width of the container */
-    height: auto; /* Maintain aspect ratio */
-    display: none; /* Initially hidden */
-    pointer-events: none; /* Prevent interaction */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    display: none;
+    pointer-events: none;
 }
 
-/* Modal styles */
 .modal-info {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1000; /* Sit on top */
+    display: none;
+    position: fixed;
+    z-index: 1000;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 120%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+    width: 100%;
+    height: 120%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal-content {
     background-color: #b4ddf2;
-    margin: 10% auto; /* Adjusted margin for better centering */
-    padding: 30px; /* Increased padding for better spacing */
-    height: 60%; /* Increased height for larger modal */
-    width: 70%; /* Increased width for larger modal */
+    margin: 10% auto;
+    padding: 30px;
+    height: 60%;
+    width: 70%;
     border: 10px solid rgb(5, 129, 5);
 }
 
@@ -308,23 +289,21 @@ audio {
     cursor: pointer;
 }
 
-/* Game Controls and Header */
 .tree-heading1 {
     position: absolute;
-    left: 50%;
+    left: 40%;
     top: 20px;
     transform: translate(-50%, 0);
     z-index: 10;
 }
 
 .tree-heading1 h1 {
-    font-size: 2.5rem;
+    font-size: 3rem;
     color: #2c3e50;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     margin: 0;
 }
 
-/* Button Controls */
 .restartBtn, .quitBtn {
     position: fixed;
     top: 20px;
@@ -334,91 +313,212 @@ audio {
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
-    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); */
     border: none;
     z-index: 1000;
 }
 
 .restartBtn {
     top:0px;
-    left: 20px;
+    left: -100px;
     background: none;
-    /* background-color: #3498db; */
-    /* color: white; */
 }
 
 .restartBtn img {
-    width: 40%;
-    height: 40%;
+    width: 50%;
+    height: 50%;
     padding: 10px 20px;
 }
 
 .quitBtn {
     top:0px;
-    right: 0px;
+    right: -100px;
     background: none;
 }
 
 .quitBtn img {
-    width: 40%;
-    height: 40%;
+    width: 50%;
+    height: 50%;
     padding: 10px 20px;
 }
 
-/* Score Container Styles */
 .score {
     position: fixed;
     top: 10px;
-    left: 69.5%;
+    left: 60%;
     transform: translateX(-50%);
+    padding: 10px 20px;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    z-index: 1000;
+    margin-top: 15px;
+    background-image: url('/assets/utilities/buttonBgimg.png');
+    background-size: cover;
+}
+
+.restartBtn:hover, .quitBtn:hover {
+    transform: translateY(-2px);
+}
+
+.modal-body {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.cloud-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 65px;
+    top: 60px;
+}
+
+.modal-image {
+    width: 35%;
+    height: 50%;
+    margin-right: 20px;
+}
+
+.modal-text {
+    flex: 1;
+}
+
+.modal-over {
+    color: red;
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content-game-over {
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 5px solid rgb(5, 129, 5);
+    height: 50%;
+    width: 50%;
+}
+
+#closeGameOverModal {
+    position: fixed;
+    right: 28%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+#playAgainBtn img,
+#mainMenuBtn img {
+    width: 50%;
+    height: 150%;
+}
+
+.modal-button {
+    width: 150px;
+    height: 50px;
+    margin: 0 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.modal-button:hover {
+    transform: scale(1.05);
+}
+
+#gameOverimg {
+    width: 100%;
+    height: auto;
+    border: none;
+    background: none;
+    cursor: default;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#gameOverimg img {
+    width: 50%;
+    height: 50%;
+}
+
+#identify-next-tree {
+    position: relative;
+    top: 20rem;
+    right: 36rem;
     padding: 10px 20px;
     color: white;
     font-size: 1rem;
     font-weight: bold;
     z-index: 1000;
-    margin-top: 15px; /* Add space below the heading */
-    background-image: url('/assets/utilities/buttonBgimg.png'); /* Add your background image here */
-    background-size: cover; 
+    background-image: url('/assets/utilities/buttonBgimg.png');
+    background-size: cover;
+    cursor: pointer;
 }
 
-/* Hover effects */
-.restartBtn:hover, .quitBtn:hover {
-    /* background-color: #2980b9; */
-    transform: translateY(-2px);
-}
-
-/*  */
-  
-.modal-body {
-    display: flex; /* Use flexbox to align items side by side */
-    align-items: center; /* Center items vertically */
-    position: relative; /* Enable positioning for clouds */
-}
-
-.cloud-container {
-    position: relative; /* Position relative for absolute children */
+.circle {
+    position: absolute;
+    background-color: rgba(75, 240, 57, 0.8);
+    border-radius: 70%;
+    padding: 15px;
+    text-align: center;
+    width: 140px;
+    height: 120px;
     display: flex;
-    justify-content: center; /* Center the gulmohar tree image */
-    align-items: center; /* Center vertically */
-    left: 65px;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+    box-shadow: 0 7px 15px rgba(2, 4, 0, 0.2);
+}
+
+.leave-circle {
+    left: -60px;
+    bottom: 0px;
+}
+
+.bark-circle {
+    left: -30px;
     top: 60px;
 }
 
-
-
-.modal-image {
-    width: 35%; /* Set a width for the image */
-    height: 50%; /* Maintain aspect ratio */
-    margin-right: 20px; /* Space between image and text */
+.lifespan-circle, .variety-circle {
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.modal-text {
-    flex: 1; /* Allow text to take the remaining space */
+.lifespan-circle {
+    left: calc(25% - 60px);
+}
+
+.variety-circle {
+    left: calc(75% + 60px);
+}
+
+.right-fruit-circle {
+    right: -30px;
+    top: 60px
+}
+
+.right-flower-circle {
+    right: -30px;
+    bottom: 0px;
 }
 
 
 /* Modal styles */
-.modal-over {
+.modal-over1 {
     color: red;
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -431,7 +531,7 @@ audio {
     background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
 }
 
-.modal-content-game-over {
+.modal-content-game-over1 {
     /* background-color: #fefefe; */
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
@@ -441,10 +541,6 @@ audio {
     width: 50%; /* Could be more or less, depending on screen size */
 }
 
-#closeGameOverModal {
-    position: fixed;
-    right: 28%;
-}
 
 /* Button Container for Game Over */
 .button-container {
@@ -455,14 +551,14 @@ audio {
 }
 
 /* Specific styles for Play Again and Main Menu buttons */
-#playAgainBtn img,
-#mainMenuBtn img {
+#playAgainBtnResult img,
+#mainMenuBtnResult img {
     width: 50%; /* Make the image fill the button */
     height: 150%; /* Maintain aspect ratio */
     /* flex-direction: row; */
 }
 /* Button Styles */
-.modal-button {
+.modal-button1 {
     width: 150px; /* Set a fixed width for both buttons */
     height: 50px; /* Set a fixed height for both buttons */
     margin: 0 10px; /* Space between buttons */
@@ -471,18 +567,9 @@ audio {
     cursor: pointer; /* Pointer cursor on hover */
     transition: transform 0.3s ease; /* Smooth transform transition */
 }
-
-
-
-/* Hover effects for buttons */
-.modal-button:hover {
-    transform: scale(1.05); /* Slight zoom effect on hover */
-}
-
-/* Game Over Image Button Styles */
-#gameOverimg {
-    width: 100%; /* Make the button fill the width of the modal */
-    height: auto; /* Maintain aspect ratio */
+#resultImage {
+    width: 100%; 
+    height: auto; 
     border: none; /* Remove border */
     background: none; /* Remove background */
     cursor: default; /* Default cursor since it's an image */
@@ -491,87 +578,25 @@ audio {
     margin-bottom: 20px; /* Space below the image */
 }
 
-#gameOverimg img {
+#resultImage img {
     width: 50%; /* Make the image fill the button */
     height: 50%; /* Maintain aspect ratio */
     
 }
 
-#identify-next-tree {
-    position: relative;
-    /* top: 10px; */
-    /* right: 10%; */
-    bottom: -250px;
-    transform: translateX(-570%);
-    padding: 10px 20px;
-    color: white;
-    font-size: 1rem;
-    font-weight: bold;
-    z-index: 1000;
-    margin-top: 15px; 
-    background-image: url('/assets/utilities/buttonBgimg.png'); /* Add your background image here */
-    background-size: cover;
-    cursor: pointer;
-}
-
-.circle {
-    position: absolute; /* Position circles absolutely */
-    background-color: rgba(75, 240, 57, 0.8); /* White background with some transparency */
-    border-radius: 70%; /* Make it a circle */
-    padding: 15px; /* Add some padding */
-    text-align: center; /* Center the text */
-    width: 140px; /* Set a fixed width */
-    height: 120px; /* Set a fixed height */
-    display: flex; /* Use flexbox for centering text */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    font-size: 17px; /* Font size for the text */
-    box-shadow: 0 7px 15px rgba(2, 4, 0, 0.2); /* Add a shadow for depth */
-}
-
-.leave-circle {
-    left: -60px; /* Position circles to the left */
-    bottom: 0px;
-}
-
-.bark-circle {
-    left: -30px; /* Position circles to the left */
-    top: 60px;
-}
-
-.lifespan-circle, .variety-circle {
-    top: -60px; /* Position circles above the gulmohar tree */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Adjust for centering */
-}
-
-.lifespan-circle {
-    left: calc(25% - 60px); /* Position the first top circle to the left */
-}
-
-.variety-circle {
-    left: calc(75% + 60px); /* Position the second top circle to the right */
-}
-
-.right-fruit-circle {
-    right: -30px; /* Position circles to the left */
-    top: 60px
+.total-score {
+    font-size: 2.5rem;
+    background-color: white; /* Set background color to white */
+    color: #2c5f2d;
+    margin: 1rem 0; /* Top and bottom margin */
+    padding: 1rem; /* Add padding for space around the text */
+    border-radius: 8px; /* Optional: Add rounded corners */
+    text-align: center;
+    display: inline-block; /* Make it behave like a block element */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
     
+    /* Add left and right margins for positioning */
+    margin-left: 35%; /* Adjust this value as needed */
+    margin-right: 20px; /* Adjust this value as needed */
 }
-
-.right-flower-circle {
-    right: -30px;
-    /* top: 190px; */
-    bottom: 0px;
-}
-
-/* .small-info {
-    color: red;
-    font-size: 12px;
-    font-weight: bold;
-
-} */
-
-
-
-
+/* /////////////////// */

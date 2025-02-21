@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+html {
+    height: 100%;
+    width: 100%;
+}
+
 /* Body and Game Container */
 body {
    font-family: 'Patrick Hand', cursive;
@@ -16,9 +21,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: auto;
-    margin: 0;
+    /* height: auto;
+    margin: 0; */
    
+    height: 100%;
+    width: 100%;
     
 }
 
@@ -28,12 +35,16 @@ audio {
 
 .game-container {
     height: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     width: 100%;
-    max-width: 1200px;
+    display: flex;
+    flex-direction: center;
+    
+    /* justify-content: space space-between; */
+    
+    /* max-width: 1200px; */
     align-items: center;
+    /* pointer-events: none;  */
+    
    
 }
 
@@ -42,11 +53,10 @@ audio {
 .sidebar {
     width: 200px;
     padding: 10px;
-    
     background-color: #45cf4a;
     border-radius: 8px;
     margin: 10px;
-    height: auto;
+    height: auto;   
     overflow-y: auto;
     position: relative; 
     z-index: 1000;
@@ -60,9 +70,48 @@ audio {
     object-position: center;
 } 
 */
-.sidebar h3 {
+/* .sidebar-right h3 {
     text-align: center;
     margin-bottom: 15px;
+    
+} */
+
+
+
+.bark-title {
+    position: absolute; /* Position the heading absolutely */
+    top: 80px; /* Distance from the top */
+    left: 140px; /* Distance from the left */
+    color: rgb(5, 129, 5); /* Text color */
+    font-size: 2rem; /* Font size */
+    text-align: left; /* Align text to the left */
+}
+
+.leave-title {
+    position: absolute; /* Position the heading absolutely */
+    top: 80px; /* Distance from the top */
+    right: 140px; /* Distance from the left */
+    color: rgb(5, 129, 5); /* Text color */
+    font-size: 2rem; /* Font size */
+    text-align: right; /* Align text to the left */
+}
+
+.fruit-title {
+    position: absolute; /* Position the heading absolutely */
+    bottom: 200px; /* Distance from the top */
+    left: 450px; /* Distance from the left */
+    color: rgb(5, 129, 5); /* Text color */
+    font-size: 2rem; /* Font size */
+    text-align: left; /* Align text to the left */
+}
+
+.flower-title {
+    position: absolute; /* Position the heading absolutely */
+    bottom: 200px; /* Distance from the top */
+    right: 450px; /* Distance from the left */
+    color: rgb(5, 129, 5); /* Text color */
+    font-size: 2rem; /* Font size */
+    text-align: right; /* Align text to the left */
 }
 
 /* Center Section (Tree Silhouette) */
@@ -75,6 +124,7 @@ audio {
     position: relative; /* Enable absolute positioning of children */
 }
 
+
 .tree-heading {
     text-align: center;
     margin-top: 50px;
@@ -85,12 +135,15 @@ audio {
 
 /* Independent Positioning for Tree Elements */
 .cardTreeContainer {
-    position: relative; /* Enable absolute positioning of children */
+    position: fixed; /* Changed from relative to fixed for viewport centering */
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Perfect centering adjustment */
+    display: flex;
+    justify-content: center;
     align-items: center;
-    align-content: center;
-    margin: 80px;
-    width: 500px;
-    height: 500px;
+    width: 35%;
+    height: 60%;
     border-radius: 1rem;
     background-color: #f5f6f9;
     background-image: linear-gradient(
@@ -104,10 +157,6 @@ audio {
       rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px,
       rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
       rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
 }
 
 .tree-section {
@@ -170,7 +219,6 @@ audio {
     justify-content: center;
     position: absolute;
     gap: 10px;
-
     bottom: 0;
     left: 0;
     padding: 10px;
@@ -179,7 +227,7 @@ audio {
 }
 
 /* Fruits and Flowers Bars */
-.fruits-bar, .flowers-bar {
+/* .fruits-bar, .flowers-bar {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -194,16 +242,19 @@ audio {
     margin-bottom: 20px;
     margin-right: 10px; 
     color: rgb(2, 60, 2);
-}
+} */
 
 .part {
+   
     margin: 0 2px;
     text-align: center;
     position: relative; /* Add this */
     z-index: 1000;
-    touch-action: manipulation; /* Enable touch pan/zoom gestures */
+    /* touch-action: manipulation;  */
     cursor: grab; /* Show grab cursor for better UX */
-    user-select: none;
+    /* user-select: none; */
+    filter: none;
+
 }
 
 .part:active {
@@ -224,28 +275,29 @@ audio {
   
 .part img {
     pointer-events: none; /* Prevent image from blocking touch events */
-    width: 100%;
-    height: 100px; /* Fixed height for consistency */
-    max-width: 120px;
+    width: 130%;
+    height: 130px; /* Fixed height for consistency */
+    /* max-width: 120px; */
     object-fit: contain;
     cursor: pointer;
     z-index: 1000;
     background-color: rgba(255, 255, 255, 0.1); /* Slight white background */
     border-radius: 12px; /* Rounded corners */
     padding: 8px;
-    box-shadow: 
+    /* box-shadow: 
         rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
         rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
         rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset,
         rgba(0, 0, 0, 0.06) 0px 2px 1px,
         rgba(0, 0, 0, 0.09) 0px 4px 2px,
         rgba(0, 0, 0, 0.09) 0px 8px 4px;
-    transition: transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out; */
 }
 
 .part img:hover {
     transform: scale(1.05); /* Slight zoom effect on hover */
 }
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -326,14 +378,14 @@ audio {
 /* Game Controls and Header */
 .tree-heading1 {
     position: absolute;
-    left: 50%;
+    left: 40%;
     top: 20px;
     transform: translate(-50%, 0);
     z-index: 10;
 }
 
 .tree-heading1 h1 {
-    font-size: 2.5rem;
+    font-size: 3rem;
     color: #2c3e50; 
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     margin: 0;
@@ -356,27 +408,27 @@ audio {
 
 .restartBtn {
     top:0px;
-    left: 0px;
+    left: -100px;
     background: none;
     /* background-color: #3498db; */
     /* color: white; */
 }
 
 .restartBtn img {
-    width: 40%;
-    height: 40%;
+    width: 50%;
+    height: 50%;
     padding: 10px 20px;
 }
 
 .quitBtn {
     top:0px;
-    right: 0px;
+    right: -100px;
     background: none;
 }
 
 .quitBtn img {
-    width: 40%;
-    height: 40%;
+    width: 50%;
+    height: 50%;
     padding: 10px 20px;
 }
 
@@ -384,11 +436,11 @@ audio {
 .score {
     position: fixed;
     top: 10px;
-    left: 69.5%;
+    left: 60%;
     transform: translateX(-50%);
     padding: 10px 20px;
     color: white;
-    font-size: 1rem;
+    font-size: 2rem;
     font-weight: bold;
     z-index: 1000;
     margin-top: 15px; /* Add space below the heading */
@@ -516,14 +568,20 @@ audio {
     position: relative;
     /* top: 10px; */
     /* right: 10%; */
-    bottom: -250px;
-    transform: translateX(-570%);
+    /* align-items: center; */
+    /* align-content: center; */
+
+    /* left: 50px;
+    bottom: -250px; */
+    /* transform: translateX(%); */
+    top: 20rem;
+    right: 36rem;
     padding: 10px 20px;
     color: white;
     font-size: 1rem;
     font-weight: bold;
     z-index: 1000;
-    margin-top: 15px; 
+    /* margin-top: 15px;  */
     background-image: url('/assets/utilities/buttonBgimg.png'); /* Add your background image here */
     background-size: cover;
     cursor: pointer;
@@ -586,7 +644,5 @@ audio {
     font-weight: bold;
 
 } */
-
-
 
 
