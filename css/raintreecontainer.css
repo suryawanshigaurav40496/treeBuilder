@@ -65,7 +65,7 @@ audio {
 
 .fruit-title {
     position: absolute;
-    bottom: 200px;
+    bottom: 150px;
     left: 450px;
     color: rgb(5, 129, 5);
     font-size: 2rem;
@@ -74,7 +74,7 @@ audio {
 
 .flower-title {
     position: absolute;
-    bottom: 300px;
+    bottom: 150px;
     right: 450px;
     color: rgb(5, 129, 5);
     font-size: 2rem;
@@ -101,14 +101,14 @@ audio {
 
 .cardTreeContainer {
     position: fixed;
-    top: 40%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
     justify-content: center;
     align-items: center;
     width: 35%;
-    height: 60%;
+    height: 65%;
     border-radius: 1rem;
     background-color: #f5f6f9;
     background-image: linear-gradient(

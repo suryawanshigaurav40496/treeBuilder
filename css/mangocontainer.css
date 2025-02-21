@@ -98,7 +98,7 @@ audio {
 
 .fruit-title {
     position: absolute; /* Position the heading absolutely */
-    bottom: 200px; /* Distance from the top */
+    bottom: 150px; /* Distance from the top */
     left: 450px; /* Distance from the left */
     color: rgb(5, 129, 5); /* Text color */
     font-size: 2rem; /* Font size */
@@ -107,7 +107,7 @@ audio {
 
 .flower-title {
     position: absolute; /* Position the heading absolutely */
-    bottom: 200px; /* Distance from the top */
+    bottom: 150px; /* Distance from the top */
     right: 450px; /* Distance from the left */
     color: rgb(5, 129, 5); /* Text color */
     font-size: 2rem; /* Font size */
@@ -136,14 +136,14 @@ audio {
 /* Independent Positioning for Tree Elements */
 .cardTreeContainer {
     position: fixed; /* Changed from relative to fixed for viewport centering */
-    top: 40%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); /* Perfect centering adjustment */
     display: flex;
     justify-content: center;
     align-items: center;
     width: 35%;
-    height: 60%;
+    height: 65%;
     border-radius: 1rem;
     background-color: #f5f6f9;
     background-image: linear-gradient(
