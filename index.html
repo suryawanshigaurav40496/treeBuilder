@@ -281,14 +281,19 @@
             document.getElementById('rulesModal').style.display = 'none';
             document.body.classList.remove('no-scroll');
         });
+    
+        const yesQuitBtn = document.getElementById('yesQuitBtn');
+        const noQuitBtn = document.getElementById('noQuitBtn');
 
-        document.getElementById('yesQuitBtn').addEventListener('click', () => {
-            window.location.href = '/';
-        });
+        yesQuitBtn.addEventListener('click', () => {
+    window.location.href = 'http://games.rrbcea.org/'; 
+});
 
-        document.getElementById('noQuitBtn').addEventListener('click', () => {
-            document.getElementById('quitConfirmationModal').style.display = 'none';
-        });
+noQuitBtn.addEventListener('click', () => {
+    // Close the modal or perform any other action
+    const modal = document.getElementById('quitConfirmationModal');
+    modal.style.display = 'none'; // Hide the modal
+});
 
         window.onclick = function(event) {
             if (event.target.className === 'modal') {
