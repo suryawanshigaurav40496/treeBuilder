@@ -593,8 +593,8 @@ audio {
     border-radius: 70%; /* Make it a circle */
     padding: 15px; /* Add some padding */
     text-align: center; /* Center the text */
-    width: 140px; /* Set a fixed width */
-    height: 120px; /* Set a fixed height */
+    width: 180px; /* Set a fixed width */
+    height: 140px; /* Set a fixed height */
     display: flex; /* Use flexbox for centering text */
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
